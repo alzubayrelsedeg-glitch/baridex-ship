@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BARIDEX | باريدكس </title>
+    
+    <!-- Google Fonts: Cairo for a modern Arabic look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: '#ef4444',
+                            DEFAULT: '#b91c1c', // Dark Red similar to image
+                            dark: '#7f1d1d',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b91c1c; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7f1d1d; 
+        }
+
+        /* Phone Mockup CSS - Creating the phone purely with code */
+        .phone-mockup {
+            border: 12px solid #1a1a1a;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+            aspect-ratio: 9/19;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 25px;
+            background: #1a1a1a;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            z-index: 20;
+        }
+
+        .app-gradient-btn {
+            background: linear-gradient(90deg, #7f1d1d 0%, #b91c1c 100%);
+            box-shadow: 0 4px 6px -1px rgba(185, 28, 28, 0.4);
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Hero Shape Background */
+        .hero-bg-shape {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: #b91c1c;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%);
+            z-index: -1;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-bg-shape {
+                width: 100%;
+                height: 50%;
+                clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur shadow-sm" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="relative w-10 h-8">
+                    <!-- CSS Truck Icon -->
+                    <i class="fas fa-truck text-brand text-2xl group-hover:translate-x-1 transition-transform"></i>
+                </div>
+                <span class="text-2xl font-bold text-brand-dark tracking-tighter">BARIDEX</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#home" class="text-gray-600 hover:text-brand font-semibold transition">الرئيسية</a>
+                <a href="#how-it-works" class="text-gray-600 hover:text-brand font-semibold transition">كيف نعمل</a>
+                <a href="#features" class="text-gray-600 hover:text-brand font-semibold transition">الميزات</a>
+                <a href="#contact" class="text-gray-600 hover:text-brand font-semibold transition">اتصل بنا</a>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="#" class="text-brand font-bold hover:underline">تسجيل دخول</a>
+                <a href="#" class="bg-brand hover:bg-brand-dark text-white px-5 py-2 rounded-full font-bold shadow-md transition transform hover:scale-105">
+                    حساب جديد
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-gray-700 text-2xl focus:outline-none" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 flex flex-col gap-4 shadow-lg">
+            <a href="#home" class="block text-gray-700 font-semibold">الرئيسية</a>
+            <a href="#how-it-works" class="block text-gray-700 font-semibold">كيف نعمل</a>
+            <a href="#features" class="block text-gray-700 font-semibold">الميزات</a>
+            <a href="#" class="block text-brand font-bold">تسجيل دخول</a>
+            <a href="#" class="block bg-brand text-white text-center py-2 rounded-lg font-bold">حساب جديد</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen pt-24 pb-12 flex items-center overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 z-[-1]">
+            <div class="w-full h-full bg-white relative">
+                <!-- The red shape on the right (RTL logic) which is left in LTR, but visually right in RTL layout -->
+                <div class="absolute top-0 right-0 w-full md:w-2/3 h-full bg-gradient-to-bl from-brand-dark to-brand rounded-bl-[100px] md:rounded-bl-[200px]"></div>
+                <!-- Pattern overlay -->
+                <div class="absolute top-0 right-0 w-full md:w-2/3 h-full opacity-10" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            
+            <!-- Text Content -->
+            <div class="text-white md:pr-8 z-10 order-2 md:order-1">
+                <div class="bg-white/10 backdrop-blur-sm inline-block px-4 py-1 rounded-full mb-4 border border-white/20">
+                    <span class="text-sm font-bold text-yellow-300">🚀 المنصة الأولى في المنطقة</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+                    <span class="block">BARIDEX</span>
+                    <span class="text-2xl md:text-4xl opacity-90">منصة تربط بين سائقي الشاحنات والتجار</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-100 mb-8 max-w-lg leading-relaxed">
+                    الحل الأمثل لنقل بضائعك. نوفر لك شبكة واسعة من السائقين لضمان وصول شحنتك في الوقت المحدد.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="bg-white text-brand-dark px-8 py-3.5 rounded-xl font-bold shadow-lg hover:bg-gray-100 transition flex items-center justify-center gap-2">
+                        <i class="fab fa-apple text-xl"></i>
+                        <span>App Store</span>
+                    </button>
+                    <button class="bg-transparent border-2 border-white text-white px-8 py-3.5 rounded-xl font-bold hover:bg-white/10 transition flex items-center justify-center gap-2">
+                        <i class="fab fa-google-play text-xl"></i>
+                        <span>Google Play</span>
+                    </button>
+                </div>
+
+                <div class="mt-8 flex items-center gap-4 text-sm text-gray-200">
+                    <div class="flex -space-x-2 space-x-reverse">
+                        
+                    </div>
+                    <p></p>
+                </div>
+            </div>
+
+            <!-- Phone Mockup (Visual Representation of the App) -->
+            <div class="relative z-10 order-1 md:order-2 flex justify-center md:justify-end">
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    
+                    <!-- App Screen Content -->
+                    <div class="h-full w-full bg-gray-50 flex flex-col pt-8">
+                        
+                        <!-- App Header -->
+                        <div class="px-4 pb-4 flex justify-between items-center">
+                            <div class="flex items-center gap-1 text-brand-dark font-bold">
+                                <span>BARIDEX</span>
+                                <i class="fas fa-truck-fast"></i>
+                            </div>
+                            <i class="fas fa-bars text-gray-400"></i>
+                        </div>
+
+                        <!-- App Balance Card -->
+                        <div class="mx-4 p-4 rounded-2xl app-gradient-btn text-white mb-4 shadow-lg">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs opacity-80">الرصيد الحالي</span>
+                                <i class="fas fa-wallet opacity-80"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-1" dir="ltr">12,450 LYD</h3>
+                            <p class="text-xs opacity-70 mb-4">رقم الحساب : 1234 **** ****</p>
+                            
+                            <div class="flex gap-2">
+                                <button class="flex-1 bg-white/20 hover:bg-white/30 py-1.5 rounded-lg text-xs font-bold transition">إيداع</button>
+                                <button class="flex-1 bg-white/20 hover:bg-white/30 py-1.5 rounded-lg text-xs font-bold transition">سحب</button>
+                            </div>
+                        </div>
+
+                        <!-- Main Actions -->
+                        <div class="px-4 flex flex-col gap-3">
+                            <button class="w-full bg-white border border-gray-200 p-3 rounded-xl shadow-sm flex items-center justify-between group hover:border-brand transition">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-red-50 text-brand flex items-center justify-center">
+                                        <i class="fas fa-truck"></i>
+                                    </div>
+                                    <span class="font-bold text-sm text-gray-700">طلب شاحنة</span>
+                                </div>
+                                <i class="fas fa-chevron-left text-gray-300 text-xs group-hover:text-brand"></i>
+                            </button>
+                            
+                            <button class="w-full bg-white border border-gray-200 p-3 rounded-xl shadow-sm flex items-center justify-between group hover:border-brand transition">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                                        <i class="fas fa-file-invoice"></i>
+                                    </div>
+                                    <span class="font-bold text-sm text-gray-700">شحنات سابقة</span>
+                                </div>
+                                <i class="fas fa-chevron-left text-gray-300 text-xs group-hover:text-brand"></i>
+                            </button>
+
+                            <button class="w-full bg-white border border-gray-200 p-3 rounded-xl shadow-sm flex items-center justify-between group hover:border-brand transition">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-green-50 text-green-600 flex items-center justify-center">
+                                        <i class="fas fa-headset"></i>
+                                    </div>
+                                    <span class="font-bold text-sm text-gray-700">الدعم الفني</span>
+                                </div>
+                                <i class="fas fa-chevron-left text-gray-300 text-xs group-hover:text-brand"></i>
+                            </button>
+                        </div>
+
+                        <!-- Recent Activity / Dummy List -->
+                        <div class="mt-4 px-4 flex-1">
+                            <h4 class="text-xs font-bold text-gray-400 mb-2">آخر العمليات</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-gray-600">نقل بضائع - طرابلس - بنغازي</span>
+                                    <span class="text-red-600 font-bold">-250 LYD</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-gray-600">شحن رصيد</span>
+                                    <span class="text-green-600 font-bold">+1000 LYD</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- App Bottom Nav -->
+                        <div class="bg-white border-t px-6 py-3 flex justify-between items-center text-xl mt-auto">
+                            <i class="fas fa-home text-brand"></i>
+                            <i class="fas fa-wallet text-gray-300"></i>
+                            <i class="fas fa-user text-gray-300"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-10 bg-white shadow-sm relative z-20 -mt-8 mx-4 md:mx-auto md:max-w-4xl rounded-xl border border-gray-100">
+        <div class="grid grid-cols-3 divide-x divide-x-reverse divide-gray-100">
+            <div class="text-center">
+                <h3 class="text-3xl font-bold text-brand">500+</h3>
+                <p class="text-gray-500 text-sm mt-1">شاحنة نشطة</p>
+            </div>
+            <div class="text-center">
+                <h3 class="text-3xl font-bold text-brand">12K</h3>
+                <p class="text-gray-500 text-sm mt-1">شحنة ناجحة</p>
+            </div>
+            <div class="text-center">
+                <h3 class="text-3xl font-bold text-brand">4.9</h3>
+                <p class="text-gray-500 text-sm mt-1">تقييم العملاء</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">كيف تعمل المنصة؟</h2>
+                <div class="w-20 h-1 bg-brand mx-auto rounded-full"></div>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">خطوات بسيطة تفصلك عن نقل بضائعك.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 text-center relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-12 left-20 right-20 h-0.5 bg-gray-200 -z-0"></div>
+
+                <!-- Step 1 -->
+                <div class="relative z-10 bg-white p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition duration-300">
+                    <div class="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-white shadow-sm">
+                        <i class="fas fa-user-plus text-3xl text-brand"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">1. أنشئ حسابك</h3>
+                    <p class="text-gray-500 leading-relaxed">سجل كتاجر أو سائق في دقائق، وقم بتوثيق بياناتك للبدء في استخدام المنصة.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative z-10 bg-white p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition duration-300">
+                    <div class="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-white shadow-sm">
+                        <i class="fa-solid fa-truck text-3xl text-brand" style="color: #a93232;"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">2. اطلب شاحنة</h3>
+                    <p class="text-gray-500 leading-relaxed">حدد نوع البضاعة، ومكان الاستلام والتسليم، واختر نوع الشاحنة المناسبة لك.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative z-10 bg-white p-8 rounded-2xl shadow-lg hover:-translate-y-2 transition duration-300">
+                    <div class="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-white shadow-sm">
+                        <i class="fas fa-map-location-dot text-3xl text-brand"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">3. تتبع واستلم</h3>
+                    <p class="text-gray-500 leading-relaxed">تتبع شحنتك حتى وصولها إلى الوجهة النهائية بأمان.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white overflow-hidden">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            
+            <!-- Feature Image/Visual -->
+            <div class="relative">
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand/10 rounded-full blur-2xl"></div>
+                <div class="grid grid-cols-2 gap-4">
+                    
+                    <div class="bg-brand text-white p-6 rounded-2xl h-64 flex flex-col justify-end shadow-xl">
+                        <i class="fas fa-bolt text-4xl mb-4"></i>
+                        <h4 class="font-bold text-lg">سرعة التوصيل</h4>
+                    </div>
+                    <div class="bg-gray-800 text-white p-6 rounded-2xl h-64 flex flex-col justify-end">
+                        <i class="fas fa-wallet text-4xl text-yellow-500 mb-4"></i>
+                        <h4 class="font-bold text-lg">أسعار تنافسية</h4>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-2xl h-64 flex flex-col justify-end transform translate-y-8">
+                        <i class="fas fa-headset text-4xl text-brand mb-4"></i>
+                        <h4 class="font-bold text-lg">دعم 24/7</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Text -->
+            <div class="md:pr-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">لماذا تختار BARIDEX؟</h2>
+                <p class="text-gray-600 mb-8 text-lg">نحن لا نقدم مجرد خدمة نقل، بل نقدم تجربة لوجستية متكاملة تضمن راحة بالك ونمو أعمالك.</p>
+                
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <div class="mt-1 w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-check text-xs"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800">سائقين موثوقين</h5>
+                            <p class="text-sm text-gray-500">يتم فحص جميع السائقين لضمان أعلى معايير الجودة.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <div class="mt-1 w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-check text-xs"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800">تتبع مباشر GPS</h5>
+                            <p class="text-sm text-gray-500">نظام تتبع دقيق يمكنك من معرفة موقع شحنتك في أي وقت.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <div class="mt-1 w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-check text-xs"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-800">تأمين على البضائع</h5>
+                            <p class="text-sm text-gray-500">خيارات تأمين متعددة لحماية بضائعك من أي مخاطر محتملة.</p>
+                        </div>
+                    </li>
+                </ul>
+                
+                <button class="mt-8 bg-brand text-white px-8 py-3 rounded-lg font-bold shadow-md hover:bg-brand-dark transition">
+                    اكتشف المزيد
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fleet/Truck Types Section -->
+    <section class="py-20 bg-gray-50" id="services">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">انواع الناقلات في المنصة</h2>
+                <p class="text-gray-600 mt-4">شاحنات تناسب جميع احتياجاتك التجارية</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center border border-gray-100">
+                    <i class="fas fa-truck-pickup text-4xl text-brand mb-4"></i>
+                    <h3 class="font-bold text-gray-800">نقل خفيف</h3>
+                    <p class="text-xs text-gray-500 mt-2">للحمولات الصغيرة والسريعة</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center border border-gray-100">
+                    <i class="fas fa-truck text-4xl text-brand mb-4"></i>
+                    <h3 class="font-bold text-gray-800">دينا / لوري</h3>
+                    <p class="text-xs text-gray-500 mt-2">للنقل المتوسط</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center border border-gray-100">
+                    <i class="fas fa-snowflake text-4xl text-blue-400 mb-4"></i>
+                    <h3 class="font-bold text-gray-800">نقل مبرد</h3>
+                    <p class="text-xs text-gray-500 mt-2">للأغذية والأدوية</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center border border-gray-100">
+                    <i class="fas fa-trailer text-4xl text-brand mb-4"></i>
+                    <h3 class="font-bold text-gray-800">تريلات ثقيلة</h3>
+                    <p class="text-xs text-gray-500 mt-2">للحمولات الكبيرة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-brand relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 bg-black opacity-10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+        
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">جاهز لنقل أعمالك للمستوى التالي؟</h2>
+            <p class="text-red-100 text-lg mb-8 max-w-2xl mx-auto">حمل تطبيق BARIDEX الآن وابدأ في نقل بضائعك بكل سهولة وأمان.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-white text-brand px-8 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition">سجل كتاجر</button>
+                <button class="bg-brand-dark border border-brand-dark text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-opacity-90 transition">سجل كسائق</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8 border-t border-gray-800">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-12 mb-12">
+            <!-- Brand -->
+            <div class="col-span-1 md:col-span-1">
+                <div class="flex items-center gap-2 mb-6">
+                    <i class="fas fa-truck text-brand text-2xl"></i>
+                    <span class="text-2xl font-bold">BARIDEX</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    المنصة الرائدة في مجال الخدمات اللوجستية، نربط بين الأعمال التجارية وأسطول ضخم من الشاحنات لضمان استمرارية سلاسل الإمداد.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand transition"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Links -->
+            <div>
+                <h4 class="font-bold text-lg mb-6">روابط سريعة</h4>
+                <ul class="space-y-3 text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-brand transition">عن المنصة</a></li>
+                    <li><a href="#" class="hover:text-brand transition">الأسئلة الشائعة</a></li>
+                    <li><a href="#" class="hover:text-brand transition">الشروط والأحكام</a></li>
+                    <li><a href="#" class="hover:text-brand transition">سياسة الخصوصية</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div>
+                <h4 class="font-bold text-lg mb-6">الخدمات المتوفرة</h4>
+                <ul class="space-y-3 text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-brand transition">نقل البضائع</a></li>
+                    <li><a href="#" class="hover:text-brand transition">تأجير الشاحنات</a></li>
+                    <li><a href="#" class="hover:text-brand transition">حلول لوجستية</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div>
+                <h4 class="font-bold text-lg mb-6">تواصل معنا</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-phone text-brand"></i>
+                        <span>+218911650600</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-envelope text-brand"></i>
+                        <span>support@baridex.com</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fas fa-map-marker-alt text-brand"></i>
+                        <span>طرابلس | ليبيا</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 BARIDEX. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Navbar bg change on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>
